@@ -6,7 +6,7 @@ node {
      }
 
      stage('Build image') {
-         app = docker.build("ap-seoul-1.ocir.io/cnqphqevfxnp/video-streaming")
+         app = docker.build("ap-seoul-1.ocir.io/cnqphqevfxnp/video-upload")
      }
 
     stage('Test image') {
@@ -17,7 +17,6 @@ node {
 
      stage('Push image') {
          docker.withRegistry('https://ap-seoul-1.ocir.io', 'ocir') {
-         // docker.withRegistry('https://register.hub.docker.com', 'docker-hub') {   
              app.push("${env.BUILD_NUMBER}")
          }
      }
@@ -26,7 +25,7 @@ node {
         echo "triggering update-manifest job"
         build job: 'update-manifest', parameters: [
             string(name: 'DOCKERTAG', value: env.BUILD_NUMBER),
-            string(name: 'SERVICE', value: 'video-streaming')
+            string(name: 'SERVICE', value: 'video-upload')
         ]
      }
 }
