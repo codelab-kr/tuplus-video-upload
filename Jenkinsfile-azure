@@ -16,7 +16,7 @@ node {
     }
 
      stage('Push image') {
-         docker.withRegistry('https://tuplus.azurecr.io', 'ocir') {
+         docker.withRegistry('https://tuplus.azurecr.io', 'azurecr') {
              app.push("${env.BUILD_NUMBER}")
          }
      }
